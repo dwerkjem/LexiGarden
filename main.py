@@ -3,6 +3,8 @@ import os
 import dotenv
 import openai
 
+import src.randomWord as rw
+
 if os.path.exists(".env"):
     dotenv.load_dotenv(".env")
 
@@ -17,8 +19,24 @@ def api_key():
             return None
 
 
+def getSentance(word):
+    openai.api_key = api_key()
+    client = openai.Client()
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {
+                "role": "system",
+                "content": f"You make a sentance using the word '{word}' asuming it is not a name.",
+            },
+        ],
+    )
+    return response.choices[0].message.content
+
+
 if api_key() is not None:
-
-    print("API Key found see README.md for more information")
-
-openai.api_key = api_key()
+    word = rw.randomWord()
+    print(f"Word: {word}")
+    print(f"Sentance: {getSentance(word)}")
+else:
+    print("API key not found")
