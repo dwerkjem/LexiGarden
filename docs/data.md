@@ -1,5 +1,12 @@
 # Data Set And Reproduction Information
 
+## Table of Contents:
+
+1. [Data Set Information](#data-set-information)
+2. [Cleaning the Data](#cleaning-the-data)
+3. [Reproducing the Data](#reproducing-the-data)
+4. [Summary](#summary)
+
 ## Data Set Information:
 
 This data set contains information about words in the English language. The data set contains the following columns:
@@ -410,4 +417,6 @@ print(f"Aggregated and sorted data has been written to {file_path}")
 
 9. We now have the final data set in the `data.csv` file. The data set contains two columns: `word` and `frequency`. The data set is now ready for analysis.we can clean the directory by removing the `ngram` directory and the intermediate files. We can also remove the `data.txt` file as it is no longer needed. To clean the directory, you can use the following code `rm data.txt final.txt ngram/* ` in the terminal.
 
-155117 words are in the data set. The data set is now ready for analysis.
+## Summary:
+
+155117 words are in the data set. The data set is now ready for analysis. The data set contains two columns: `word` and `frequency`. The data set is sorted by frequency in descending order. The data set is not comrehensive and may contain errors.
