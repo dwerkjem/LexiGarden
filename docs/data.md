@@ -32,7 +32,9 @@ once you have the pre-requisites, you can follow the steps below to reproduce th
 
 Steps to reproduce the data:
 
-1. we will use a bash script to download the data from the google books Ngram Viewer. The script will download the data for each letter of the alphabet and save it in a directory called `ngram`. The script will also unzip the files after downloading them. A assumption is made that the script is run in a directory that is for the data and has at least 50GB of free space. To run the script, you can use the following code `./ngramDownloader.sh` in the terminal.
+1. make sure you are in the .data directory by running `cd .data` in the terminal from the root of the project.
+
+2. we will use a bash script to download the data from the google books Ngram Viewer. The script will download the data for each letter of the alphabet and save it in a directory called `ngram`. The script will also unzip the files after downloading them. A assumption is made that the script is run in a directory that is for the data and has at least 50GB of free space. To run the script, you can use the following code `./ngramDownloader.sh` in the terminal. The script will take some time to download the data depending on your internet connection.
 
 ```bash
 #!/bin/bash
@@ -60,7 +62,7 @@ done
 echo "All downloads completed."
 ```
 
-2. We will use a rust script to get rid of the data before 1900. The script will read each file in the `ngram` directory (relative to the current directory) and filter out any lines that contain a year before 1900. The script will then overwrite the files with the filtered data. The script will output any errors that occur during the process. To run the script, you can use the following code `./wordCompresser` in the terminal.
+3. We will use a rust script to get rid of the data before 1900. The script will read each file in the `ngram` directory (relative to the current directory) and filter out any lines that contain a year before 1900. The script will then overwrite the files with the filtered data. The script will output any errors that occur during the process. To run the script, you can use the following code `./wordCompresser` in the terminal.
 
 ```rust
 use std::fs::{self, File};
@@ -117,7 +119,7 @@ fn main() {
 }
 ```
 
-3. We will use a rust script to add the two frequencies of the same word together and aggregate all the years into one data point. The script will read each file in the `ngram` directory (relative to the current directory) for each letter of the alphabet and add the frequencies of the same word together. The script will then overwrite the files with the added frequencies. We do this because the data set contains multiple entries for the same word with different frequencies. To run the script, you can use the following code `./wordCompresser2` in the terminal.
+4. We will use a rust script to add the two frequencies of the same word together and aggregate all the years into one data point. The script will read each file in the `ngram` directory (relative to the current directory) for each letter of the alphabet and add the frequencies of the same word together. The script will then overwrite the files with the added frequencies. We do this because the data set contains multiple entries for the same word with different frequencies. To run the script, you can use the following code `./wordCompresser2` in the terminal.
 
 ```rust
 use std::collections::HashMap;
@@ -166,7 +168,7 @@ fn main() {
 }
 ```
 
-4. We will use a rust script to add all the files together. The script will read each file in the `ngram` directory (relative to the current directory) for each letter of the alphabet and add all the files together. The script will produce a single file called `combined.txt` that contains all the data from the individual files. To run the script, you can use the following code `./wordCompresser3` in the terminal.
+5. We will use a rust script to add all the files together. The script will read each file in the `ngram` directory (relative to the current directory) for each letter of the alphabet and add all the files together. The script will produce a single file called `combined.txt` that contains all the data from the individual files. To run the script, you can use the following code `./wordCompresser3` in the terminal.
 
 ```rust
 use std::fs::{self, File, OpenOptions};
@@ -213,7 +215,7 @@ fn main() {
 }
 ```
 
-5. We will use a python script to remove data associated with the Part of speech. The script will read the `ngram/combined.txt` file and remove all the data that is associated with a part of speech. The script will then produce a new file called `data.txt` that contains the cleaned data. This assumes that the part of speech is always in the format `word_POS` or `word.n_POS`. To run the script, you can use the following code `python3 wordCompresser4.py` in the terminal.
+6. We will use a python script to remove data associated with the Part of speech. The script will read the `ngram/combined.txt` file and remove all the data that is associated with a part of speech. The script will then produce a new file called `data.txt` that contains the cleaned data. This assumes that the part of speech is always in the format `word_POS` or `word.n_POS`. To run the script, you can use the following code `python3 wordCompresser4.py` in the terminal.
 
 ```python
 # Define the function to process the line
@@ -252,7 +254,7 @@ with open(input_file_path, "r") as input_file, open(
 print("File has been processed and output saved to:", output_file_path)
 ```
 
-6. We will use a python script to remove any words that are not in the English language. The script will read the `data.txt` file and remove all the data that is not in the English language. The script will produce a file called `final.txt`. We will use the `nltk` library to check if a word is in the English language. To run the script, you can use the following code `python3 wordCompresser5.py` in the terminal. Before running the script, you need to install the `nltk` library by running `pip install nltk` in the terminal.
+7. We will use a python script to remove any words that are not in the English language. The script will read the `data.txt` file and remove all the data that is not in the English language. The script will produce a file called `final.txt`. We will use the `nltk` library to check if a word is in the English language. To run the script, you can use the following code `python3 wordCompresser5.py` in the terminal. Before running the script, you need to install the `nltk` library by running `pip install nltk` in the terminal.
 
 ```python
 import nltk
@@ -307,7 +309,7 @@ print(
 )
 ```
 
-7. We will use a python script to convert the data into a CVS file. The script will read the `final.txt` file and convert it into a CVS file called `data.csv`. The script will produce a CVS file with two columns: `word` and `frequency`. To run the script, you can use the following code `python3 csvConverter.py` in the terminal. The script assumes that the input file is white-space-delimited and contains two columns: `word` and `frequency`. And the output file is a CVS file. The script uses the `csv` module to write the data to the CVS file. The script also assumes that the input file has no header row or comas in the data.
+8. We will use a python script to convert the data into a CVS file. The script will read the `final.txt` file and convert it into a CVS file called `data.csv`. The script will produce a CVS file with two columns: `word` and `frequency`. To run the script, you can use the following code `python3 csvConverter.py` in the terminal. The script assumes that the input file is white-space-delimited and contains two columns: `word` and `frequency`. And the output file is a CVS file. The script uses the `csv` module to write the data to the CVS file. The script also assumes that the input file has no header row or comas in the data.
 
 ```python
 import csv
@@ -374,7 +376,7 @@ with open(output_file_path, mode="w", newline="") as outfile:
 print(f"Aggregated data has been written to {output_file_path}")
 ```
 
-8. We will use a python script to sort the data in the CSV file by frequency in descending order. The script will read the `data.csv` file and sort the data by frequency in descending order. The script will overwrite the `data.csv` file with the sorted data. To run the script, you can use the following code `python3 sort.py` in the terminal.
+9. We will use a python script to sort the data in the CSV file by frequency in descending order. The script will read the `data.csv` file and sort the data by frequency in descending order. The script will overwrite the `data.csv` file with the sorted data. To run the script, you can use the following code `python3 sort.py` in the terminal.
 
 ```python
 import csv
@@ -415,7 +417,7 @@ with open(file_path, mode="w", newline="") as outfile:
 print(f"Aggregated and sorted data has been written to {file_path}")
 ```
 
-9. We now have the final data set in the `data.csv` file. The data set contains two columns: `word` and `frequency`. The data set is now ready for analysis.we can clean the directory by removing the `ngram` directory and the intermediate files. We can also remove the `data.txt` file as it is no longer needed. To clean the directory, you can use the following code `rm data.txt final.txt ngram/* ` in the terminal.
+10. We now have the final data set in the `data.csv` file. The data set contains two columns: `word` and `frequency`. The data set is now ready for analysis.we can clean the directory by removing the `ngram` directory and the intermediate files. We can also remove the `data.txt` file as it is no longer needed. To clean the directory, you can use the following code `rm data.txt final.txt ngram/* ` in the terminal.
 
 ## Summary:
 
