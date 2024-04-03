@@ -14,6 +14,14 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+add a `.env` file in the root directory of the project with the following content (replace `your_openai_api_key` with your OpenAI API key):
+
+```bash
+OPENAI_API_KEY=your_openai_api_key
+```
+
+if you need a new OpenAI API key, you can create one [here](https://platform.openai.com/signup)
+
 ## data-methodology
 
 See [data-methodology](docs/data.md)
