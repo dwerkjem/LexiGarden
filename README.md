@@ -6,7 +6,7 @@ LexiGarden is a gamified application designed to make learning new words engagin
 
 ## data-methodology
 
-See [data-methodology] (docs/data.md)
+See [data-methodology](docs/data.md)
 
 ## Idea and Concept
 
