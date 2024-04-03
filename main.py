@@ -3,6 +3,7 @@ import os
 import dotenv
 import openai
 
+import src.ai as ai
 import src.randomWord as rw
 
 if os.path.exists(".env"):
@@ -35,8 +36,6 @@ def getSentance(word):
 
 
 if api_key() is not None:
-    word = rw.randomWord()
-    print(f"Word: {word}")
-    print(f"Sentance: {getSentance(word)}")
+   
 else:
     print("API key not found")
