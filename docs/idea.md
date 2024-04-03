@@ -1,6 +1,6 @@
 # LexiGarden
 
-## Table of Contents
+## Table of Contents:
 
 - [brief](#brief)
   - [Description](#description)
