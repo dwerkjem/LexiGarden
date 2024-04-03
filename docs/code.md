@@ -49,7 +49,7 @@ generated with `tree -a -I '__pycache__' -I '.git' -I '.vscode' -I '.venv' -I '.
   see the [data documentation](data.md) for more information.)
 - The `data` directory contains the data files used in the project theses are `ai.joblib` (a pre-trained model) and `data.csv` (a dataset).
 - The `docs` directory contains the documentation for the project. The documentation is split into three files `code.md`, `data.md` and `idea.md`.
-- The `src` directory contains the source code for the project. The source code is split into two files `ai.py` (responsible for the AI) and `randomWord.py` (responsible for the random word generation).
+- The `src` directory contains the source code for the project. The source code is split into two files `ai.py` (responsible for the AI) and `randomWord.py` (responsible for the random word generation). see the [ai documentation](../src/ai.md) for more information.)
 - The `main.py` file is the entry point for the project it is what is run when the project is executed with `python3 main.py`.
 - The `README.md` file is the main documentation for the project. It contains a brief overview of the project, how to run the project, and where to find the other documentation.
 - The `requirements.txt` file contains the dependencies for the project. These can be installed with `pip install -r requirements.txt`.
