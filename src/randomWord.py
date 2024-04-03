@@ -1,6 +1,6 @@
 import random
 
-path = "data/final.csv"
+path = "data/data.csv"
 
 
 def randomWord():
