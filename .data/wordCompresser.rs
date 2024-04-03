@@ -25,7 +25,7 @@ fn compress(folder: &Path) -> io::Result<()> {
             if parts.len() > 1 {
                 if let Ok(year) = parts[1].parse::<i32>() {
                     // If the year is >= 1970, keep the line
-                    if year >= 1970 {
+                    if year >= 1900 {
                         lines_to_write.push(line);
                     }
                 }

@@ -37,7 +37,7 @@ fn compress_and_aggregate(folder: &Path) -> io::Result<()> {
 }
 
 fn main() {
-    let folder = Path::new("ngram"); // Replace with your folder path
+    let folder = Path::new("ngram");
     if let Err(e) = compress_and_aggregate(folder) {
         eprintln!("Error processing files: {}", e);
     }

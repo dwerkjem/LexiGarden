@@ -16,9 +16,9 @@ def process_line(line):
 
 
 # Path to the input file
-input_file_path = "combined.txt"
+input_file_path = "ngram/combined.txt"
 # Path to the output file
-output_file_path = "processed_combined.txt"
+output_file_path = "data.txt"
 
 # Open the input file and process it line by line
 with open(input_file_path, "r") as input_file, open(

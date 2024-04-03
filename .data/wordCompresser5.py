@@ -26,7 +26,7 @@ def first_word_in_dictionary_and_unique(line, encountered_words):
 
 
 # Path to the input file
-input_file_path = "processed_combined.txt"
+input_file_path = "data.txt"
 # Path to the output file
 output_file_path = "final.txt"
 
