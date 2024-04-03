@@ -29,3 +29,7 @@ See [data-methodology](docs/data.md)
 ## Idea and Concept
 
 See [idea-concept](docs/idea.md)
+
+## Execution
+
+See [code](docs/code.md)
