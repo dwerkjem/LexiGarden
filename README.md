@@ -10,4 +10,4 @@ See [data-methodology] (docs/data.md)
 
 ## Idea and Concept
 
-See [idea-concept] (docs/idea.md)
+See [idea-concept](docs/idea.md)
