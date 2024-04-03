@@ -30,6 +30,6 @@ See [data-methodology](docs/data.md)
 
 See [idea-concept](docs/idea.md)
 
-## Execution
+## Structure
 
 See [code](docs/code.md)
