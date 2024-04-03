@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Define the input and output CSV file names
-input_csv_file = "data.csv"
+input_csv_file = "ngram/final.csv"
 output_csv_file = "sorted.csv"
 
 # Read the CSV file into a pandas DataFrame
