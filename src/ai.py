@@ -1,92 +1,113 @@
-import os
 import random
 
-import nltk
+import numpy as np
 from joblib import dump, load
-from nltk.corpus import cmudict
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-nltk.download("cmudict")
+import aiIn
 
 
-def extractFeatures(word):
-    d = cmudict.dict()
-    syllables = (
-        [len(list(y for y in x if y[-1].isdigit())) for x in d[word.lower()]]
-        if word.lower() in d
-        else [0]
-    )
-    return [
-        len(word),
-        sum(syllables) / len(syllables) if syllables else 0,
-    ]
+def extract_features(word):
+    features = aiIn.extractFeatures(word)
+    return features
 
 
 def getRandomWord():
-    with open("data/data.csv", "r") as f:
-        words = f.readlines()
-    word = random.choice(words).strip()
-    word, frequency = word.split(",")
-    return word, int(frequency)
+    data = "data/data.csv"
+    with open(data, "r") as f:
+        lines = f.readlines()
+        random_line = random.choice(lines)
+        word = random_line.split(",")[0]
+        return word
 
 
-X = []  # Feature vectors
-y = []  # Corresponding difficulties
-model = None  # Initialize model variable
+def loadModel():
+    try:
+        model = load("data/model.joblib")
+    except FileNotFoundError:
+        model = None
+    return model
 
-# Path where the model is saved
-model_file_path = "data/ai.joblib"
 
-# Check if a saved model exists and load it
-if os.path.exists(model_file_path):
-    model = load(model_file_path)
-    print("Model loaded successfully.")
-else:
-    print("No saved model found. A new model will be trained.")
+def saveModel(model):
+    dump(model, "data/model.joblib")
+    print("Model saved to data/model.joblib")
 
-try:
+
+def saveRating(word, rating):
+    filename = "data/ratings.txt"
+    try:
+        rating = int(rating)
+        assert 1 <= rating <= 5
+    except ValueError:
+        print("Rating must be an integer exiting..")
+        exit(1)
+    # Initialize an empty dictionary to hold word ratings
+    ratings_dict = {}
+
+    try:
+        with open(filename, "r") as f:
+            for line in f:
+                key, value = line.strip().split(",")
+                # If the word already exists in the dictionary, append the new rating to its list
+                # Otherwise, create a new list with the current rating
+                if key in ratings_dict:
+                    ratings_dict[key].append(value)
+                else:
+                    ratings_dict[key] = [value]
+    except FileNotFoundError:
+        print(f"No existing data file found. Creating a new one for {word}.")
+
+    # Append the new rating for the word
+    if word in ratings_dict:
+        ratings_dict[word].append(rating)
+    else:
+        ratings_dict[word] = [rating]
+
+    # Write the updated data back to the file
+    with open(filename, "w") as f:
+        for key, values in ratings_dict.items():
+            for value in values:
+                f.write(f"{key},{value}\n")
+
+    print(f'Rating of {rating} appended to "{word}".')
+
+
+def queryRating(word):
+    filename = "data/ratings.txt"
+    try:
+        with open(filename, "r") as f:
+            for line in f:
+                key, value = line.strip().split(",")
+                if key == word:
+                    return value
+    except FileNotFoundError:
+        print(f"No existing data file found. Creating a new one for {word}.")
+        return None
+
+
+def trainModel():
+    times = 0  # Number of times the model has been trained
+    model = loadModel()
+    if model is None:
+        model = RandomForestClassifier(n_estimators=100, max_depth=2, random_state=0)
+
     while True:
-        word, frequency = getRandomWord()
-        features = extractFeatures(word)
-        print(f"Word: {word}, Features: {features}")
-
-        # If model exists, predict the difficulty for the current word
-        if model is not None:
-            predicted_difficulty = model.predict([features + [frequency]])
-            print(f"Predicted Difficulty (Before Training): {predicted_difficulty[0]}")
-
-        difficulty = input("Difficulty (1-5 or 'exit' to stop): ")
-        if difficulty.lower() == "exit":
-            break
+        print(f"Training model for the {times + 1}th time")
+        word = getRandomWord()
+        prev_rating = queryRating(word)
+        if prev_rating is None:
+            print(f"Rate the word: {word}")
+            rating = input("Rating: ")
+            saveRating(word, rating)
         else:
-            difficulty = int(difficulty)
-            assert 1 <= difficulty <= 5
+            print(f"Rating for {word} already exists: {prev_rating}")
+            continue
 
-        # Append new data point to training data
-        X.append(features + [frequency])
-        y.append(difficulty)
+        times += 1
 
-except AssertionError:
-    print("Invalid difficulty level. Exiting...")
 
-# Proceed with training or retraining the model as needed
-if X and y:  # Ensure there is data to train on
-    if model is None:  # If no model was loaded, initialize a new one
-        model = RandomForestClassifier()
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
-    )
-    model.fit(X_train, y_train)  # Train or retrain the model
-
-    y_pred = model.predict(X_test)
-    accuracy = accuracy_score(y_test, y_pred)
-    print(f"Model accuracy: {accuracy}")
-
-    # Save or overwrite the model file
-    dump(model, model_file_path)
-    print(f"Model saved to {model_file_path}")
-else:
-    print("No data collected. Using existing model if available.")
+if __name__ == "__main__":
+    trainModel()
