@@ -6,11 +6,11 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-import aiIn
+import src.features
 
 
 def extract_features(word):
-    features = aiIn.extractFeatures(word)
+    features = features.extractFeatures(word)
     return features
 
 
@@ -88,12 +88,8 @@ def queryRating(word):
         return None
 
 
-def trainModel():
+def dataModel():
     times = 0  # Number of times the model has been trained
-    model = loadModel()
-    if model is None:
-        model = RandomForestClassifier(n_estimators=100, max_depth=2, random_state=0)
-
     while True:
         print(f"Training model for the {times + 1}th time")
         word = getRandomWord()
@@ -109,5 +105,23 @@ def trainModel():
         times += 1
 
 
+def trainModel():
+    pass
+
+
+def testModel():
+    pass
+
+
 if __name__ == "__main__":
-    trainModel()
+    print("Welcome to the AI module")
+    choice = input("Enter 1 to train the model, 2 to rate words, 3 to test the model: ")
+    if choice == "1":
+        trainModel()
+    elif choice == "2":
+        dataModel()
+    elif choice == "3":
+        testModel()
+    else:
+        print("Invalid choice. Exiting...")
+        exit(1)
