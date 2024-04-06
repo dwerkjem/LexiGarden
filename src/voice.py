@@ -61,32 +61,26 @@ def getVoice(word: str) -> str:
     response.stream_to_file(speech_file_path)
 
 
-def playVoice(path: str) -> None:
+def playVoice(word: str) -> None:
     """Play the audio file
 
     Args:
 
-    path (str): path to the audio file
-
+    word (str): word to be played
     """
-    audio = AudioSegment.from_file(path)
+    audio = AudioSegment.from_file(f"voice/{word}.mp3")
     play(audio)
 
 
-def stopVoice():
-    """Stop the audio"""
-    play(AudioSegment.empty())
-
-
-def deleteVoice(path: str) -> None:
+def deleteVoice(word: str) -> None:
     """Delete the audio file of the word
 
     Args:
 
-    path (str): path to the audio file
+    word (str): word to be deleted
 
     """
-    os.remove(path)
+    os.remove(f"voice/{word}.mp3")
 
 
 def speak(word: str) -> None:
@@ -99,3 +93,9 @@ def speak(word: str) -> None:
     """
     getVoice(word)
     playVoice(f"voice/{word}.mp3")
+
+
+def clearVoice() -> None:
+    """Clear all the audio files in the voice directory"""
+    for file in Path("voice").glob("*.mp3"):
+        os.remove(file)
