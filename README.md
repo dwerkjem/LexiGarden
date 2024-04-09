@@ -16,7 +16,7 @@ pip install -r requirements.txt
 set the environment variable `OPENAI_API_KEY` to your OpenAI API key:
 
 ```bash
-OPENAI_API_KEY=your_openai_api_key
+export OPENAI_API_KEY=your_openai_api_key
 ```
 
 if you need a new OpenAI API key, you can create one [here](https://platform.openai.com/signup)
