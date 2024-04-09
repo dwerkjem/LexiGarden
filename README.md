@@ -13,8 +13,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
-
-add a `.env` file in the root directory of the project with the following content (replace `your_openai_api_key` with your OpenAI API key):
+set the environment variable `OPENAI_API_KEY` to your OpenAI API key:
 
 ```bash
 OPENAI_API_KEY=your_openai_api_key
